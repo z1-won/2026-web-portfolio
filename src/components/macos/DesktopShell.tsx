@@ -9,7 +9,7 @@ import MacOSWindow from "./MacOSWindow";
 type DesktopWindowKind = "finder" | "about" | "skills" | "projects" | "writing" | "contact";
 
 type DesktopWindow = {
-  id: number;
+  id: string;
   kind: DesktopWindowKind;
   title: string;
   href: string;
@@ -34,10 +34,10 @@ export default function DesktopShell({ children }: { children: React.ReactNode }
   const searchParams = useSearchParams();
   const isDesktopWindow = searchParams.get("desktopWindow") === "1";
   const [windows, setWindows] = useState<DesktopWindow[]>([]);
-  const [activeId, setActiveId] = useState<number | null>(null);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const openWindow = useCallback((kind: DesktopWindowKind) => {
-    const id = Date.now() + Math.floor(Math.random() * 1000);
+    const id = crypto.randomUUID();
     setWindows((current) => [
       ...current,
       {
