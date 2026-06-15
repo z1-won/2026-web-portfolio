@@ -12,7 +12,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DEV FREQUENCY — Bang Jiwon",
+  title: "Bang Jiwon",
   description: "PM-minded FullStack Developer",
 };
 
