@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className={`${inter.variable} ${ibmPlexMono.variable}`}>
-      <body className="overflow-hidden antialiased">
+      <body className="antialiased">
         <Suspense fallback={null}>
           <DesktopShell>{children}</DesktopShell>
         </Suspense>
