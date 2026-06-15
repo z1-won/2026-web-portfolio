@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { projects } from "@/data/projects";
 import MacOSWindow from "@/components/macos/MacOSWindow";
+import { getStatusClass } from "@/lib/utils/project-utils";
 import { C } from "./_components/Finder/tokens";
 import { Icon } from "./_components/Finder/Icons";
 import { IconView, ListView } from "./_components/Finder/ProjectViews";
@@ -126,7 +128,7 @@ export default function FinderHome() {
           <SidebarSection label="즐겨찾기">
             <SidebarItem
               icon={<Icon d={sidebarIcons.star} size={13} />}
-              label="DEV FREQUENCY"
+              label="BANG JIWON"
               active={false}
               onClick={() => {}}
               color="#E8A020"
@@ -200,16 +202,60 @@ export default function FinderHome() {
   }
 
   return (
-    <MacOSWindow
-      title="About"
-      defaultWidth={900}
-      defaultHeight={650}
-    >
-      <iframe
-        title="About window"
-        src="/about?desktopWindow=1"
-        className="h-full w-full border-0 bg-white"
-      />
-    </MacOSWindow>
+    <>
+      {/* Mobile home */}
+      <div className="px-4 py-6 md:hidden">
+        <div className="mb-8">
+          <p className="font-mono text-[10px] tracking-widest text-subtle">PORTFOLIO</p>
+          <h1 className="mt-2 text-2xl font-bold text-text">방지원</h1>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted">
+            PM-minded FullStack Developer
+          </p>
+        </div>
+
+        <p className="mb-3 font-mono text-[10px] tracking-widest text-subtle">PROJECTS</p>
+        <div className="flex flex-col gap-3">
+          {projects.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/projects/${p.slug}`}
+              className="rounded-lg border border-border bg-surface p-4 transition-colors hover:border-accent-lime/50"
+            >
+              <div className="mb-1.5 flex items-center gap-2">
+                <span
+                  className={`rounded border px-2 py-0.5 font-mono text-[10px] ${getStatusClass(p.status, "border")}`}
+                >
+                  {p.status}
+                </span>
+                <span className="font-mono text-[10px] text-subtle">{p.period}</span>
+              </div>
+              <h2 className="text-sm font-semibold text-text">{p.title}</h2>
+              <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted">{p.summary}</p>
+              <div className="mt-2.5 flex flex-wrap gap-1">
+                {p.stack.slice(0, 3).map((s) => (
+                  <span
+                    key={s}
+                    className="rounded border border-border px-1.5 py-0.5 font-mono text-[9px] text-subtle"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop home — About window */}
+      <div className="hidden md:block">
+        <MacOSWindow title="About" defaultWidth={900} defaultHeight={650}>
+          <iframe
+            title="About window"
+            src="/about?desktopWindow=1"
+            className="h-full w-full border-0 bg-white"
+          />
+        </MacOSWindow>
+      </div>
+    </>
   );
 }
